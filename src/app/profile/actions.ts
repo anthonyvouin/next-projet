@@ -86,20 +86,23 @@ export async function updateProfile(data: UpdateProfileData) {
       };
     }
 
-    await prisma.user.update({
+    const updatedUser = await prisma.user.update({
       where: { id: currentUser.id },
       data: updateData,
     });
-
+    
     revalidatePath("/profile");
     revalidatePath("/");
 
     return {
       success: true,
       message: "Profil mis à jour avec succès.",
+      user: {
+        name: data.name || currentUser.name,
+        email: data.email || currentUser.email,
+      }
     };
   } catch (error) {
-    console.error("Erreur lors de la mise à jour du profil:", error);
     return {
       success: false,
       message: "Une erreur s'est produite lors de la mise à jour du profil.",

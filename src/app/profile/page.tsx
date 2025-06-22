@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState, useEffect } from "react";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import { updateProfile } from "./actions";
@@ -37,6 +37,15 @@ export default function ProfilePage() {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  // Fonction pour rafraîchir les données de session
+  const refreshUserData = async () => {
+    const updatedSession = await update();
+    if (updatedSession?.user) {
+      setName(updatedSession.user.name || "");
+      setEmail(updatedSession.user.email || "");
+    }
+  };
+
   useEffect(() => {
     if (session?.user) {
       setName(session.user.name || "");
@@ -60,16 +69,23 @@ export default function ProfilePage() {
     setLoading(true);
 
     try {
+      // Envoyer les données au serveur
       const result = await updateProfile({ name, email });
 
       if (result.success) {
+        // Afficher le message de succès
         success(result.message);
-        await update({ name, email });
-        router.refresh();
+        
+        // Redirection vers la page d'accueil puis retour au profil pour forcer le rechargement
+        router.push("/");
+        setTimeout(() => {
+          router.push("/profile");
+        }, 100);
       } else {
         showError(result.message);
       }
     } catch (err) {
+      console.error("Erreur:", err);
       showError("Une erreur s'est produite. Veuillez réessayer.");
     } finally {
       setLoading(false);
