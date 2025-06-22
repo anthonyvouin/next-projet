@@ -37,7 +37,6 @@ export default function ProfilePage() {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  // Fonction pour rafraîchir les données de session
   const refreshUserData = async () => {
     const updatedSession = await update();
     if (updatedSession?.user) {
@@ -69,14 +68,11 @@ export default function ProfilePage() {
     setLoading(true);
 
     try {
-      // Envoyer les données au serveur
       const result = await updateProfile({ name, email });
 
       if (result.success) {
-        // Afficher le message de succès
         success(result.message);
         
-        // Redirection vers la page d'accueil puis retour au profil pour forcer le rechargement
         router.push("/");
         setTimeout(() => {
           router.push("/profile");
