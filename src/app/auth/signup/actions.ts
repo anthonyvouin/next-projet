@@ -10,11 +10,19 @@ interface SignUpData {
   password: string;
 }
 
-export async function signUp(data: SignUpData) {
+export async function signUp({
+  name,
+  email,
+  password,
+}: {
+  name: string;
+  email: string;
+  password: string;
+}) {
   try {
     // Vérifier si l'utilisateur existe déjà
     const existingUser = await prisma.user.findUnique({
-      where: { email: data.email },
+      where: { email },
     });
 
     if (existingUser) {
@@ -24,21 +32,22 @@ export async function signUp(data: SignUpData) {
       };
     }
 
-    // Hacher le mot de passe
-    const hashedPassword = await bcrypt.hash(data.password, 10);
+    // Hachage du mot de passe
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Créer l'utilisateur
+    // Création de l'utilisateur
     await prisma.user.create({
       data: {
-        name: data.name,
-        email: data.email,
+        name,
+        email,
         password: hashedPassword,
+        role: "USER", // Rôle par défaut
       },
     });
 
     return {
       success: true,
-      message: "Compte créé avec succès.",
+      message: "Compte créé avec succès. Vous pouvez maintenant vous connecter.",
     };
   } catch (error) {
     console.error("Erreur lors de l'inscription:", error);
