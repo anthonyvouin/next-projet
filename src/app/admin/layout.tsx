@@ -33,32 +33,19 @@ export default function AdminLayout({
 
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="bg-primary text-primary-foreground">
+      <header className="border-b bg-background">
         <div className="container mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-6">
             <Link href="/admin" className="text-xl font-bold">
-              Dashboard Admin
+              Tableau de bord
             </Link>
-            <nav className="hidden md:flex items-center gap-6">
-              <Link href="/admin" className="hover:underline">
-                Tableau de bord
-              </Link>
-              <Link href="/admin/users" className="hover:underline">
-                Utilisateurs
-              </Link>
-              <Link href="/" className="hover:underline">
-                Site public
-              </Link>
-            </nav>
+          
           </div>
           <div className="flex items-center gap-4">
             <ModeToggle />
-            <div className="text-sm">
-              {session?.user?.name || "Admin"}
-            </div>
             <Link
-              href="/api/auth/signout"
-              className="bg-primary-foreground text-primary px-3 py-1 rounded-md text-sm"
+              href="/auth/signin"
+              className="bg-primary text-primary-foreground px-3 py-1 rounded-md text-sm"
             >
               Déconnexion
             </Link>
@@ -70,7 +57,7 @@ export default function AdminLayout({
         {children}
       </main>
 
-      <footer className="bg-muted py-4">
+      <footer className="border-t bg-background py-4">
         <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
           &copy; {new Date().getFullYear()} - Interface d'administration
         </div>
