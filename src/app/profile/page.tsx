@@ -46,7 +46,7 @@ export default function ProfilePage() {
 
   if (status === "loading") {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-xl font-semibold mb-2">Chargement...</h2>
           <p className="text-muted-foreground">Veuillez patienter</p>
@@ -108,7 +108,7 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
       <Navbar />
       <div className="container max-w-4xl mx-auto px-4 py-10">
         <h1 className="text-3xl font-bold mb-8 text-center">Mon Profil</h1>
