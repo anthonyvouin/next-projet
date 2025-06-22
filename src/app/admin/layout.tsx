@@ -1,10 +1,11 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import Link from "next/link";
 import { ModeToggle } from "@/components/ui/mode-toggle";
+import { Button } from "@/components/ui/button";
 
 export default function AdminLayout({
   children,
@@ -31,6 +32,10 @@ export default function AdminLayout({
     );
   }
 
+  const handleSignOut = () => {
+    signOut({ callbackUrl: "/auth/signin" });
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <header className="border-b bg-background">
@@ -43,12 +48,13 @@ export default function AdminLayout({
           </div>
           <div className="flex items-center gap-4">
             <ModeToggle />
-            <Link
-              href="/auth/signin"
-              className="bg-primary text-primary-foreground px-3 py-1 rounded-md text-sm"
+            <Button
+              onClick={handleSignOut}
+              variant="outline"
+              size="sm"
             >
               Déconnexion
-            </Link>
+            </Button>
           </div>
         </div>
       </header>

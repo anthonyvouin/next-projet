@@ -144,13 +144,21 @@ export default function SignUp() {
               </div>
             </div>
           </CardContent>
-          <CardFooter className="flex flex-col gap-8 pt-6">
+          <CardFooter className="flex flex-col gap-4 pt-6">
             <Button
               type="submit"
               className="w-full mt-4"
               disabled={loading}
             >
               {loading ? "Inscription en cours..." : "S'inscrire"}
+            </Button>
+            <Button
+              type="button"
+              variant="ghost"
+              className="w-full"
+              onClick={() => router.push("/")}
+            >
+              Annuler
             </Button>
             <div className="text-sm text-center mt-2">
               Vous avez déjà un compte?{" "}
