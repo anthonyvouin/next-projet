@@ -6,7 +6,9 @@ import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 
 export function Navbar() {
-  const { data: session, status } = useSession();
+  const { data: session, status } = useSession({
+    required: false,
+  });
   const pathname = usePathname();
   const isLoading = status === "loading";
 

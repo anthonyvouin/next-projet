@@ -1,6 +1,5 @@
 import { PrismaClient } from "@/generated/prisma";
 
-// Déclaration pour éviter de multiples instances en développement
 declare global {
   var prisma: PrismaClient | undefined;
 }

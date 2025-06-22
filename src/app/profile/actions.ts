@@ -15,7 +15,6 @@ interface UpdateProfileData {
 
 export async function updateProfile(data: UpdateProfileData) {
   try {
-    // Vérifier la session de l'utilisateur
     const session = await getServerSession(authOptions);
     
     if (!session?.user?.email) {
@@ -25,7 +24,6 @@ export async function updateProfile(data: UpdateProfileData) {
       };
     }
 
-    // Récupérer l'utilisateur actuel
     const currentUser = await prisma.user.findUnique({
       where: { email: session.user.email },
     });
@@ -37,17 +35,13 @@ export async function updateProfile(data: UpdateProfileData) {
       };
     }
 
-    // Préparer les données à mettre à jour
     const updateData: any = {};
 
-    // Mettre à jour le nom si fourni
     if (data.name) {
       updateData.name = data.name;
     }
 
-    // Mettre à jour l'email si fourni et différent
     if (data.email && data.email !== currentUser.email) {
-      // Vérifier si l'email est déjà utilisé
       const existingUser = await prisma.user.findUnique({
         where: { email: data.email },
       });
@@ -62,9 +56,7 @@ export async function updateProfile(data: UpdateProfileData) {
       updateData.email = data.email;
     }
 
-    // Mettre à jour le mot de passe si fourni
     if (data.currentPassword && data.newPassword) {
-      // Vérifier que l'utilisateur a un mot de passe
       if (!currentUser.password) {
         return {
           success: false,
@@ -72,7 +64,6 @@ export async function updateProfile(data: UpdateProfileData) {
         };
       }
 
-      // Vérifier le mot de passe actuel
       const passwordMatch = await bcrypt.compare(
         data.currentPassword,
         currentUser.password
@@ -85,11 +76,9 @@ export async function updateProfile(data: UpdateProfileData) {
         };
       }
 
-      // Hacher le nouveau mot de passe
       updateData.password = await bcrypt.hash(data.newPassword, 10);
     }
 
-    // Si aucune donnée à mettre à jour
     if (Object.keys(updateData).length === 0) {
       return {
         success: false,
@@ -97,14 +86,13 @@ export async function updateProfile(data: UpdateProfileData) {
       };
     }
 
-    // Mettre à jour l'utilisateur
     await prisma.user.update({
       where: { id: currentUser.id },
       data: updateData,
     });
 
-    // Revalider le chemin pour mettre à jour les données affichées
     revalidatePath("/profile");
+    revalidatePath("/");
 
     return {
       success: true,

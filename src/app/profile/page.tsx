@@ -44,7 +44,6 @@ export default function ProfilePage() {
     }
   }, [session]);
 
-  // Afficher un état de chargement pendant la vérification de la session
   if (status === "loading") {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -66,6 +65,7 @@ export default function ProfilePage() {
       if (result.success) {
         success(result.message);
         await update({ name, email });
+        router.refresh();
       } else {
         showError(result.message);
       }
