@@ -10,7 +10,6 @@ interface SignInData {
 
 export async function authenticate(data: SignInData) {
   try {
-    // Vérifier si l'utilisateur existe
     const user = await prisma.user.findUnique({
       where: { email: data.email },
     });
@@ -22,7 +21,6 @@ export async function authenticate(data: SignInData) {
       };
     }
 
-    // Vérifier le mot de passe
     const passwordMatch = await bcrypt.compare(data.password, user.password);
 
     if (!passwordMatch) {

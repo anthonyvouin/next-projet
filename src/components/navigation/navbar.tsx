@@ -26,6 +26,16 @@ export function Navbar() {
             >
               Accueil
             </Link>
+            {session && (
+              <Link
+                href="/profile"
+                className={`text-sm font-medium transition-colors ${
+                  pathname === "/profile" ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                Mon Profil
+              </Link>
+            )}
           </nav>
         </div>
         <div className="flex items-center gap-3">
@@ -35,11 +45,12 @@ export function Navbar() {
             </Button>
           ) : session ? (
             <div className="flex items-center gap-4">
-              <span className="text-sm">
+              <span className="text-sm hidden sm:inline">
                 Bonjour, {session.user?.name || session.user?.email}
               </span>
               <Button
                 variant="outline"
+                size="sm"
                 onClick={() => signOut({ callbackUrl: "/" })}
               >
                 Déconnexion
