@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
+import { ModeToggle } from "@/components/ui/mode-toggle";
 
 export function Navbar() {
   const { data: session, status } = useSession({
@@ -41,6 +42,7 @@ export function Navbar() {
               </Link>
             )}
           </nav>
+          <ModeToggle />
           <div className="flex items-center gap-3">
             {isLoading ? (
               <Button variant="ghost" disabled>
