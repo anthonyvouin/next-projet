@@ -144,15 +144,15 @@ export default function SignUp() {
               </div>
             </div>
           </CardContent>
-          <CardFooter className="flex flex-col gap-6">
+          <CardFooter className="flex flex-col gap-8 pt-6">
             <Button
               type="submit"
-              className="w-full"
+              className="w-full mt-4"
               disabled={loading}
             >
               {loading ? "Inscription en cours..." : "S'inscrire"}
             </Button>
-            <div className="text-sm text-center">
+            <div className="text-sm text-center mt-2">
               Vous avez déjà un compte?{" "}
               <Link href="/auth/signin" className="text-primary hover:underline">
                 Se connecter

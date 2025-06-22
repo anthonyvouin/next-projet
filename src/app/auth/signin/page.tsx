@@ -95,15 +95,15 @@ export default function SignIn() {
               </div>
             </div>
           </CardContent>
-          <CardFooter className="flex flex-col gap-6">
+          <CardFooter className="flex flex-col gap-8 pt-6">
             <Button
               type="submit"
-              className="w-full"
+              className="w-full mt-4"
               disabled={loading}
             >
               {loading ? "Connexion en cours..." : "Se connecter"}
             </Button>
-            <div className="text-sm text-center">
+            <div className="text-sm text-center mt-2">
               Vous n'avez pas de compte?{" "}
               <Link href="/auth/signup" className="text-primary hover:underline">
                 S'inscrire
