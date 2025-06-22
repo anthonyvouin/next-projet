@@ -41,10 +41,8 @@ export default function SignUp() {
         showError(result.message);
       } else {
         success(result.message);
-        // Rediriger vers la page de connexion après 2 secondes
-        setTimeout(() => {
-          router.push("/auth/signin");
-        }, 2000);
+        // Rediriger vers la page de connexion immédiatement
+        router.push("/auth/signin");
       }
     } catch (err) {
       showError("Une erreur s'est produite. Veuillez réessayer.");
@@ -56,7 +54,7 @@ export default function SignUp() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50">
       <Card className="w-full max-w-md">
-        <CardHeader>
+        <CardHeader className="space-y-1">
           <CardTitle className="text-2xl text-center">Inscription</CardTitle>
           <CardDescription className="text-center">
             Créez un compte pour accéder à toutes les fonctionnalités
@@ -107,7 +105,7 @@ export default function SignUp() {
               />
             </div>
           </CardContent>
-          <CardFooter className="flex flex-col gap-4">
+          <CardFooter className="flex flex-col gap-6">
             <Button
               type="submit"
               className="w-full"
